@@ -12,6 +12,22 @@ class ProductController extends AbstractController
 {
     /**
      * @param ManagerRegistry $doctrine
+     * @return void
+     * @Route("/querying-for-objects-using-sql")
+     */
+    public function queryingForObjectSql(ManagerRegistry $doctrine )
+    {
+        $entityManager = $doctrine->getManager();
+
+        $minPrice = 1000;
+
+        $products = $entityManager->getRepository(Product::class)->findAllGreaterThanPriceSqlQuery($minPrice);
+
+        dd($products);
+    }
+
+    /**
+     * @param ManagerRegistry $doctrine
      * @return Response
      * @Route("/querying-for-objects")
      */
