@@ -12,6 +12,25 @@ class ProductController extends AbstractController
 {
     /**
      * @param ManagerRegistry $doctrine
+     * @param int $id
+     * @return Response
+     * @Route("/product/{id}")
+     */
+    public function show(ManagerRegistry $doctrine, int $id)
+    {
+        $product = $doctrine->getRepository(Product::class)->find($id);
+
+        if (!$product) {
+            throw $this->createNotFoundException(
+                'No product found for id '. $id
+            );
+        }
+
+        return new Response('Check out this great product: '.$product->getName());
+    }
+
+    /**
+     * @param ManagerRegistry $doctrine
      * @return Response
      * @Route("/product", name="create_product")
      */
