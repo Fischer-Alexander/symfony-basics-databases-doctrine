@@ -12,6 +12,23 @@ class ProductController extends AbstractController
 {
     /**
      * @param ManagerRegistry $doctrine
+     * @return Response
+     * @Route("/querying-for-objects")
+     */
+    public function queryingForObject(ManagerRegistry $doctrine)
+    {
+        $entityManager = $doctrine->getManager();
+
+        $minPrice = 1000;
+
+        $products = $entityManager->getRepository(Product::class)->findAllGreaterThanPrice($minPrice);
+
+
+        dd($products);
+    }
+
+    /**
+     * @param ManagerRegistry $doctrine
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @Route("/product/edit/{id}")
